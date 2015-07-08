@@ -1,1 +1,1 @@
-<?php include_once("fb_login"); ?>
+<?php include_once("fb_login.html"); ?>
