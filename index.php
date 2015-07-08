@@ -1,1 +1,1 @@
-<?php include_once("home.html"); ?>
+<?php include_once("3d_news_feed.html"); ?>
