@@ -24,7 +24,7 @@
       // for FB.getLoginStatus().
       if (response.status === 'connected') {
         // Logged into your app and Facebook.
-        window.location.href = "/3d_news_feed.html";
+        loadFeed();
       } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
         document.getElementById('status').innerHTML = 'Please log ' +
@@ -82,14 +82,48 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    // Here we run a very simple test of the Graph API after login is
-    // successful.  See statusChangeCallback() for when this call is made.
-    function testAPI() {
-      console.log('Welcome!  Fetching your information.... ');
-      FB.api('/me', function(response) {
-        console.log('Successful login for: ' + response.name);
-        document.getElementById('status').innerHTML =
-          'Thanks for logging in, ' + response.name + '!';
+    // After we log in we can load the feed.
+    function loadFeed() {
+      FB.api('/me/feed',
+        function(response) {
+          console.log(response);
+          var parsedStories = [];
+          for (var i = 0; i < response.data.length; i++) {
+            var story = response.data[i];
+            var parsedStory = {};
+            if ('story' in story) {
+              parsedStory.text = story.story;
+            } else {
+              parsedStory.text = story.message;
+            };
+            var myCanvas = document.getElementById('my_canvas_id');
+            var ctx = myCanvas.getContext('2d');
+            var img = new Image;
+            img.onload = function(){
+              ctx.drawImage(img,0,0); // Or at whatever offset you like
+            };
+
+            var imageUrl = story.picture;
+            var canv = document.createElement('canvas');
+            canv.id = imageUrl;
+
+            var img = new Image;
+            img.onload = function(){
+              canv.drawImage(img,0,0); // Or at whatever offset you like
+            };
+
+            img.src = imageUrl;
+
+            document.body.appendChild(canv); // adds the canvas to the body element
+            img.src = strDataURI;
+            parsedStory.picture = imageUrl;
+            parsedStory.poster = story.from.name;
+            parsedStories.push(parsedStory)
+          };
+
+          console.log(parsedStories);
+          var text = JSON.stringify(response);
+          document.getElementById('status').innerHTML = text;
       });
     }
   </script>
@@ -100,10 +134,9 @@
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+<fb:login-button id="fb-login" scope="public_profile,email,user_posts" onlogin="checkLoginState();">
 </fb:login-button>
 
-HIHI
 <div id="status">
 </div>
 </body>

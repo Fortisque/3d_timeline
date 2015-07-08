@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "git add ."
 git add .
-echo "git commit -m '.'"
-git commit -m '.'
-echo "git push heroku master"
-git push heroku master
+echo "git commit --amend --no-edit"
+git commit --amend --no-edit
+echo "git push heroku master -f"
+git push heroku master -f
