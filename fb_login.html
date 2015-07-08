@@ -96,26 +96,26 @@
             } else {
               parsedStory.text = story.message;
             };
-            var myCanvas = document.getElementById('my_canvas_id');
-            var ctx = myCanvas.getContext('2d');
-            var img = new Image;
-            img.onload = function(){
-              ctx.drawImage(img,0,0); // Or at whatever offset you like
-            };
+            // var myCanvas = document.getElementById('my_canvas_id');
+            // var ctx = myCanvas.getContext('2d');
+            // var img = new Image;
+            // img.onload = function(){
+            //   ctx.drawImage(img,0,0); // Or at whatever offset you like
+            // };
 
             var imageUrl = story.picture;
-            var canv = document.createElement('canvas');
-            canv.id = imageUrl;
+            // var canv = document.createElement('canvas');
+            // canv.id = imageUrl;
 
-            var img = new Image;
-            img.onload = function(){
-              canv.drawImage(img,0,0); // Or at whatever offset you like
-            };
+            // var img = new Image;
+            // img.onload = function(){
+            //   canv.drawImage(img,0,0); // Or at whatever offset you like
+            // };
 
-            img.src = imageUrl;
+            // img.src = imageUrl;
 
-            document.body.appendChild(canv); // adds the canvas to the body element
-            img.src = strDataURI;
+            // document.body.appendChild(canv); // adds the canvas to the body element
+            // img.src = strDataURI;
             parsedStory.picture = imageUrl;
             parsedStory.poster = story.from.name;
             parsedStories.push(parsedStory)
